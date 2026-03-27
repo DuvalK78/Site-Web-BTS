@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Horizon Gaming | Accueil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="Nexus Horizon Gaming" width="150">
+            </a>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html" class="active">Accueil</a></li>
+                    <li><a href="configurations.html">Configurations</a></li>
+                    <li><a href="sur-mesure.html">Sur Mesure</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Votre PC gaming,<br>conçu pour la victoire.</h1>
+            <p class="subtitle">Des configurations sur mesure pour repousser vos limites.</p>
+            <a href="sur-mesure.html" class="btn">Configurer mon PC</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="container">
+            <h2>Nos Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon">🔧</div>
+                    <h3>Montage Sur Mesure</h3>
+                    <p>Un PC unique, adapté à votre style et à vos besoins.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">🎧</div>
+                    <h3>Conseil Expert</h3>
+                    <p>Des recommandations objectives pour faire le bon choix.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">🛡️</div>
+                    <h3>SAV Réactif</h3>
+                    <p>Un support dédié pour garantir votre satisfaction.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Prêt à passer à l’étape supérieure ?</h2>
+            <a href="sur-mesure.html" class="btn">Commencer maintenant</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Nexus Horizon Gaming. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
