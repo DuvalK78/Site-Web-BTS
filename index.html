@@ -1,78 +1,603 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Horizon Gaming | Accueil</title>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/main.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NHC — Nexus Horizon Cybernétique | PC Gaming Sur Mesure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #0b0b0f;
+  --surface:  #111118;
+  --card:     #16161f;
+  --line:     rgba(255,255,255,0.07);
+  --line-b:   rgba(99,179,255,0.2);
+  --blue:     #3b9eff;
+  --blue-2:   #1a6fff;
+  --glow:     rgba(59,158,255,0.15);
+  --red:      #ff3c3c;
+  --white:    #f0f0f8;
+  --mid:      rgba(240,240,248,0.55);
+  --dim:      rgba(240,240,248,0.28);
+  --mono:     'JetBrains Mono', monospace;
+  --display:  'Bebas Neue', sans-serif;
+  --body:     'Inter', sans-serif;
+  --nav-h:    64px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:var(--body);font-weight:300;line-height:1.65;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+
+.rv{opacity:0;transform:translateY(22px);transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.45s}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 56px;background:rgba(11,11,15,.88);backdrop-filter:blur(24px) saturate(1.4);border-bottom:1px solid var(--line);transition:background .3s}
+.nav-logo{font-family:var(--display);font-size:1.7rem;letter-spacing:.08em;display:flex;align-items:center;gap:3px}
+.nav-logo .dot{color:var(--blue);font-size:2rem;line-height:.7}
+.nav-menu{display:flex;align-items:center;gap:36px}
+.nav-menu a{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);transition:color .2s}
+.nav-menu a:hover{color:var(--white)}
+.nav-cta{font-family:var(--mono)!important;font-size:.66rem!important;letter-spacing:.14em!important;text-transform:uppercase;padding:9px 22px;background:var(--blue);color:var(--bg)!important;font-weight:500;transition:background .2s,transform .2s!important}
+.nav-cta:hover{background:#5fafff!important;transform:translateY(-1px)}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:calc(var(--nav-h) + 60px) 56px 80px;position:relative;overflow:hidden}
+.hero-canvas{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 90% 60% at 60% 0%,rgba(59,158,255,.09) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 100% 100%,rgba(26,111,255,.06) 0%,transparent 60%),var(--bg)}
+.hero-canvas::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,black 30%,transparent 80%)}
+.hero-canvas::after{content:'';position:absolute;top:-20%;right:0;width:38%;height:160%;background:linear-gradient(160deg,rgba(59,158,255,.04) 0%,transparent 60%);border-left:1px solid rgba(59,158,255,.08);transform:skewX(-4deg)}
+.hero-kicker{font-family:var(--mono);font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:12px;margin-bottom:24px;position:relative;z-index:1;opacity:0;animation:up .7s cubic-bezier(.16,1,.3,1) .05s forwards}
+.hero-kicker::before{content:'';width:32px;height:1px;background:var(--blue)}
+.hero-h1{font-family:var(--display);font-size:clamp(4rem,10vw,10rem);line-height:.94;letter-spacing:.015em;text-transform:uppercase;position:relative;z-index:1;opacity:0;animation:up .85s cubic-bezier(.16,1,.3,1) .18s forwards}
+.hero-h1 .accent{color:var(--blue);display:block}
+.hero-h1 .sub{display:block;font-size:clamp(1.6rem,3.5vw,3.8rem);color:var(--mid);margin-top:6px}
+.hero-bottom{position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:space-between;margin-top:48px;flex-wrap:wrap;gap:32px;opacity:0;animation:up .75s cubic-bezier(.16,1,.3,1) .5s forwards}
+.hero-desc{max-width:460px;font-size:1.05rem;font-weight:300;color:var(--mid);line-height:1.75}
+.hero-desc strong{color:var(--white);font-weight:500}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.hero-stats{position:absolute;bottom:0;left:0;right:0;z-index:1;display:flex;border-top:1px solid var(--line);opacity:0;animation:up .7s cubic-bezier(.16,1,.3,1) .75s forwards}
+.stat{flex:1;padding:22px 0;text-align:center;border-right:1px solid var(--line)}
+.stat:last-child{border-right:none}
+.stat-n{font-family:var(--display);font-size:2.4rem;letter-spacing:.06em;color:var(--blue);line-height:1}
+.stat-l{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-top:5px}
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;padding:14px 30px;font-weight:500;transition:transform .2s,filter .2s,background .2s,color .2s;white-space:nowrap}
+.btn:hover{transform:translateY(-2px)}
+.btn-solid{background:var(--blue);color:var(--bg)}
+.btn-solid:hover{filter:brightness(1.18)}
+.btn-outline{border:1px solid rgba(255,255,255,.25);color:var(--mid)}
+.btn-outline:hover{border-color:var(--white);color:var(--white)}
+
+/* SECTIONS */
+.section{padding:110px 56px}
+.s-inner{max-width:1200px;margin:0 auto}
+.s-tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);margin-bottom:14px}
+.s-title{font-family:var(--display);font-size:clamp(2.6rem,5vw,5rem);text-transform:uppercase;letter-spacing:.04em;line-height:.96;margin-bottom:22px}
+.s-title .hl{color:var(--blue)}
+.s-sub{font-size:1rem;color:var(--mid);max-width:540px;line-height:1.75}
+
+/* SERVICES */
+#services{background:var(--surface);border-top:1px solid var(--line)}
+.srv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin-top:64px;background:var(--line);border:1px solid var(--line)}
+.srv-card{background:var(--card);padding:52px 44px;position:relative;overflow:hidden;transition:background .3s}
+.srv-card:hover{background:#1c1c28}
+.srv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--blue-2));transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.srv-card:hover::before{transform:scaleX(1)}
+.srv-num{font-family:var(--display);font-size:4.5rem;line-height:1;color:rgba(255,255,255,.04);position:absolute;top:24px;right:28px;letter-spacing:.04em;user-select:none}
+.srv-icon-wrap{width:52px;height:52px;background:var(--glow);border:1px solid var(--line-b);display:flex;align-items:center;justify-content:center;margin-bottom:24px}
+.srv-icon-wrap svg{width:24px;height:24px;color:var(--blue)}
+.srv-title{font-family:var(--display);font-size:1.8rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px}
+.srv-body{font-size:.94rem;color:var(--mid);line-height:1.75}
+.srv-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;background:rgba(59,158,255,.1);border:1px solid rgba(59,158,255,.2);color:var(--blue)}
+
+/* PROCESS */
+#process{background:var(--bg)}
+.proc-step{display:grid;grid-template-columns:80px 1fr;gap:36px;padding:44px 0;border-bottom:1px solid var(--line);align-items:start}
+.proc-step:first-child{border-top:1px solid var(--line)}
+.proc-n{font-family:var(--display);font-size:3.8rem;letter-spacing:.04em;color:rgba(59,158,255,.25);line-height:1;padding-top:4px}
+.proc-row{display:flex;align-items:center;gap:16px;margin-bottom:12px;flex-wrap:wrap}
+.proc-title{font-family:var(--display);font-size:2rem;text-transform:uppercase;letter-spacing:.04em}
+.proc-badge{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border:1px solid rgba(255,255,255,.15);color:var(--dim)}
+.proc-desc{font-size:.94rem;color:var(--mid);max-width:680px;line-height:1.75}
+
+/* CATALOGUE */
+#catalogue{background:var(--surface);border-top:1px solid var(--line)}
+.tab-row{display:flex;gap:2px;margin-top:56px;margin-bottom:2px}
+.tab{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 28px;background:var(--card);border:1px solid var(--line);color:var(--dim);cursor:pointer;transition:all .2s}
+.tab:hover{color:var(--mid);border-color:rgba(255,255,255,.15)}
+.tab.on{background:var(--blue);color:var(--bg);border-color:var(--blue);font-weight:500}
+.cfg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line)}
+.cfg-card{background:var(--card);display:flex;flex-direction:column;transition:background .3s;position:relative;overflow:hidden}
+.cfg-card:hover{background:#1c1c28}
+.cfg-card.featured{background:linear-gradient(160deg,#131b2e 0%,var(--card) 55%)}
+.cfg-card.featured::after{content:'TOP VENTE';position:absolute;top:0;right:0;font-family:var(--mono);font-size:.55rem;letter-spacing:.14em;background:var(--blue);color:var(--bg);padding:5px 14px}
+.cfg-top{padding:36px 32px 28px;border-bottom:1px solid var(--line);flex:1}
+.cfg-tier{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
+.cfg-name{font-family:var(--display);font-size:2rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+.cfg-slug{font-size:.85rem;color:var(--dim);margin-bottom:24px}
+.cfg-price-lbl{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.cfg-price{font-family:var(--display);font-size:2.8rem;color:var(--blue);line-height:1}
+.cfg-price-note{font-size:.78rem;color:var(--dim);margin-top:3px}
+.cfg-specs{padding:24px 32px;border-bottom:1px solid var(--line)}
+.spec{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.04);gap:16px}
+.spec:last-child{border-bottom:none}
+.sk{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);flex-shrink:0}
+.sv{font-size:.9rem;color:var(--mid);text-align:right}
+.cfg-target{padding:14px 32px;background:rgba(59,158,255,.07);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.cfg-target-lbl{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.cfg-target-val{font-family:var(--mono);font-size:.75rem;color:var(--blue);letter-spacing:.06em}
+.cfg-foot{padding:20px 32px}
+.btn-cfg{width:100%;font-family:var(--mono);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:13px;background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--mid);cursor:pointer;transition:border-color .2s,color .2s,background .2s}
+.btn-cfg:hover{border-color:var(--blue);color:var(--blue);background:var(--glow)}
+.cfg-card.featured .btn-cfg{background:var(--blue);border-color:var(--blue);color:var(--bg)}
+.cfg-card.featured .btn-cfg:hover{filter:brightness(1.12)}
+
+/* WHY */
+#why{background:var(--bg)}
+.why-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-top:72px}
+.why-pt{display:flex;gap:24px;padding:32px 0;border-bottom:1px solid var(--line)}
+.why-pt:first-child{border-top:1px solid var(--line)}
+.why-ico{width:48px;height:48px;flex-shrink:0;background:var(--glow);border:1px solid var(--line-b);display:flex;align-items:center;justify-content:center;margin-top:2px}
+.why-ico svg{width:22px;height:22px;color:var(--blue)}
+.why-pt-title{font-family:var(--display);font-size:1.5rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
+.why-pt-desc{font-size:.92rem;color:var(--mid);line-height:1.75}
+.terminal{background:var(--card);border:1px solid var(--line);overflow:hidden;position:sticky;top:calc(var(--nav-h) + 24px)}
+.t-bar{background:var(--surface);border-bottom:1px solid var(--line);padding:11px 16px;display:flex;align-items:center;gap:8px}
+.t-dot{width:11px;height:11px;border-radius:50%}
+.td-r{background:#ff5f57}.td-y{background:#febc2e}.td-g{background:#28c840}
+.t-title{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;color:var(--dim);margin-left:10px;text-transform:uppercase}
+.t-body{padding:22px 20px 28px;font-family:var(--mono);font-size:.75rem;line-height:2.1}
+.tl{display:flex;gap:10px}
+.tp{color:var(--blue)}.tc{color:var(--mid)}
+.to{color:#5dce7b;padding-left:20px}
+.to::before{content:'› ';color:var(--blue)}
+.tx{color:var(--dim);padding-left:20px;font-size:.68rem}
+.tb{height:8px}
+.cursor{display:inline-block;width:8px;height:1.1em;background:var(--blue);animation:blink 1s step-end infinite;vertical-align:middle}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* CONTACT */
+#contact{background:var(--surface);border-top:1px solid var(--line)}
+.contact-layout{display:grid;grid-template-columns:320px 1fr;gap:72px;margin-top:64px}
+.c-info{display:flex;flex-direction:column;gap:2px}
+.c-block{padding:18px 20px;background:var(--card);border:1px solid var(--line);border-left:2px solid var(--blue)}
+.c-lbl{font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:5px}
+.c-val{font-size:.95rem;color:var(--mid)}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fg{display:flex;flex-direction:column;gap:7px}
+.fg.full{grid-column:1/-1}
+.fg label{font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.fg input,.fg select,.fg textarea{background:var(--card);border:1px solid var(--line);color:var(--white);padding:13px 16px;font-family:var(--body);font-size:.93rem;font-weight:300;outline:none;width:100%;transition:border-color .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--blue)}
+.fg select{appearance:none;cursor:pointer}
+.fg textarea{min-height:110px;resize:vertical}
+.f-note{grid-column:1/-1;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;color:var(--dim)}
+.f-submit{grid-column:1/-1;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;padding:16px 44px;background:var(--blue);border:none;color:var(--bg);font-weight:500;cursor:pointer;transition:filter .2s,transform .2s;width:fit-content}
+.f-submit:hover{filter:brightness(1.12);transform:translateY(-2px)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--line);max-width:720px;width:100%;max-height:80vh;overflow-y:auto;position:relative}
+.modal-head{position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--line);padding:20px 28px;display:flex;justify-content:space-between;align-items:center}
+.modal-title{font-family:var(--display);font-size:1.6rem;letter-spacing:.04em;text-transform:uppercase}
+.modal-close{background:none;border:none;color:var(--mid);font-size:1.4rem;cursor:pointer;line-height:1;padding:4px}
+.modal-body{padding:32px 28px}
+.modal-body h3{font-family:var(--display);font-size:1.1rem;letter-spacing:.04em;text-transform:uppercase;color:var(--blue);margin:28px 0 10px}
+.modal-body h3:first-child{margin-top:0}
+.modal-body p{font-size:.9rem;color:var(--mid);line-height:1.75;margin-bottom:10px}
+.modal-body ul{padding-left:18px;list-style:disc;margin-bottom:10px}
+.modal-body ul li{font-size:.9rem;color:var(--mid);line-height:1.75}
+
+/* FOOTER */
+footer{padding:44px 56px;background:var(--bg);border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.foot-logo{font-family:var(--display);font-size:1.5rem;letter-spacing:.08em}
+.foot-logo .dot{color:var(--blue)}
+.foot-links{display:flex;gap:28px;flex-wrap:wrap}
+.foot-links a,.foot-links button{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);background:none;border:none;cursor:pointer;transition:color .2s}
+.foot-links a:hover,.foot-links button:hover{color:var(--white)}
+.foot-copy{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+
+/* RESPONSIVE */
+@media(max-width:1000px){.why-layout{grid-template-columns:1fr}.terminal{position:static}.cfg-grid{grid-template-columns:1fr 1fr}.contact-layout{grid-template-columns:1fr}}
+@media(max-width:800px){#nav{padding:0 24px}.nav-menu{display:none}.section{padding:72px 24px}#hero{padding:calc(var(--nav-h)+40px) 24px 80px}.srv-grid{grid-template-columns:1fr}.cfg-grid{grid-template-columns:1fr}.proc-step{grid-template-columns:48px 1fr;gap:20px}.form{grid-template-columns:1fr}.fg.full{grid-column:auto}footer{flex-direction:column}}
+@media(max-width:500px){.hero-h1{font-size:3.2rem}.hero-stats{flex-wrap:wrap}.stat{min-width:50%}}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <a href="index.html" class="logo">
-                <img src="assets/images/logo.png" alt="Nexus Horizon Gaming" width="150">
-            </a>
-            <nav class="nav">
-                <ul>
-                    <li><a href="index.html" class="active">Accueil</a></li>
-                    <li><a href="configurations.html">Configurations</a></li>
-                    <li><a href="sur-mesure.html">Sur Mesure</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>Votre PC gaming,<br>conçu pour la victoire.</h1>
-            <p class="subtitle">Des configurations sur mesure pour repousser vos limites.</p>
-            <a href="sur-mesure.html" class="btn">Configurer mon PC</a>
-        </div>
-    </section>
+<nav id="nav">
+  <a href="#hero" class="nav-logo">NHC<span class="dot">.</span></a>
+  <div class="nav-menu">
+    <a href="#services">Services</a>
+    <a href="#process">Processus</a>
+    <a href="#catalogue">Configs</a>
+    <a href="#why">Expertise</a>
+    <a href="#contact" class="nav-cta">Devis gratuit</a>
+  </div>
+</nav>
 
-    <!-- Services Section -->
-    <section class="services">
-        <div class="container">
-            <h2>Nos Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="icon">🔧</div>
-                    <h3>Montage Sur Mesure</h3>
-                    <p>Un PC unique, adapté à votre style et à vos besoins.</p>
-                </div>
-                <div class="service-card">
-                    <div class="icon">🎧</div>
-                    <h3>Conseil Expert</h3>
-                    <p>Des recommandations objectives pour faire le bon choix.</p>
-                </div>
-                <div class="service-card">
-                    <div class="icon">🛡️</div>
-                    <h3>SAV Réactif</h3>
-                    <p>Un support dédié pour garantir votre satisfaction.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-canvas"></div>
+  <div class="hero-kicker">Assemblage PC Gaming Sur Mesure — Normandie</div>
+  <h1 class="hero-h1">
+    <span>Nexus</span>
+    <span class="accent">Horizon</span>
+    <span class="sub">Votre machine. Montée par des experts.</span>
+  </h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">Du conseil à la livraison, <strong>NHC assemble votre PC gaming de A à Z</strong> — chaque composant choisi pour votre usage, chaque paramètre validé. Vous recevez une machine prête à jouer, pas un puzzle à terminer.</p>
+    <div class="hero-btns">
+      <a href="#catalogue" class="btn btn-solid">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Voir les configs
+      </a>
+      <a href="#contact" class="btn btn-outline">Devis gratuit →</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-n">340+</div><div class="stat-l">Machines assemblées</div></div>
+    <div class="stat"><div class="stat-n">72h</div><div class="stat-l">Délai d'assemblage</div></div>
+    <div class="stat"><div class="stat-n">24h</div><div class="stat-l">Burn-in test</div></div>
+    <div class="stat"><div class="stat-n">3 ans</div><div class="stat-l">Garantie MO</div></div>
+    <div class="stat"><div class="stat-n">4.9/5</div><div class="stat-l">Note clients</div></div>
+  </div>
+</section>
 
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2>Prêt à passer à l’étape supérieure ?</h2>
-            <a href="sur-mesure.html" class="btn">Commencer maintenant</a>
-        </div>
-    </section>
+<!-- SERVICES -->
+<section id="services" class="section">
+  <div class="s-inner">
+    <div class="s-tag rv">Services</div>
+    <h2 class="s-title rv d1">Ce qu'on fait <span class="hl">concrètement</span></h2>
+    <p class="s-sub rv d2">Pas de configs standardisées sorties d'un entrepôt. Chaque machine est pensée pour un profil de jeu précis, assemblée avec soin et validée avant livraison.</p>
+    <div class="srv-grid">
+      <div class="srv-card rv d1">
+        <div class="srv-num">01</div>
+        <div class="srv-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104A11.959 11.959 0 0112 3c.688 0 1.366.057 2.025.166m-4.275-.062a24.301 24.301 0 014.5 0m0 0v5.714a2.25 2.25 0 001.357 2.059l.21.104M14.25 3.104c.251.023.501.05.75.082M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div class="srv-title">Conseil & Sélection</div>
+        <div class="srv-body">On analyse votre usage — jeux ciblés, résolution, budget, esthétique. On traduit ça en liste de composants optimisée, argumentée pièce par pièce. Sans jargon inutile, sans superflu.</div>
+        <div class="srv-chips"><span class="chip">Gratuit</span><span class="chip">Budget optimisé</span><span class="chip">Compatibilité vérifiée</span></div>
+      </div>
+      <div class="srv-card rv d2">
+        <div class="srv-num">02</div>
+        <div class="srv-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437"/></svg></div>
+        <div class="srv-title">Assemblage Expert</div>
+        <div class="srv-body">Pâte thermique appliquée correctement. Câbles gérés pour le flux d'air et la lisibilité. Chaque connecteur posé à la main. On n'expédie pas une boîte de pièces, on livre une machine.</div>
+        <div class="srv-chips"><span class="chip">Cable management</span><span class="chip">Thermique optimisée</span><span class="chip">BIOS configuré</span></div>
+      </div>
+      <div class="srv-card rv d3">
+        <div class="srv-num">03</div>
+        <div class="srv-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg></div>
+        <div class="srv-title">Overclocking & Optimisation</div>
+        <div class="srv-body">XMP/EXPO activés par défaut sur toutes les configs. Pour les builds avancés : OC CPU et RAM validé sur banc de test, timings serrés, BIOS fine-tuné pour maximiser les performances réelles en jeu.</div>
+        <div class="srv-chips"><span class="chip">XMP / EXPO</span><span class="chip">OC validé</span><span class="chip">Timings RAM serrés</span></div>
+      </div>
+      <div class="srv-card rv d4">
+        <div class="srv-num">04</div>
+        <div class="srv-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg></div>
+        <div class="srv-title">Test, Garantie & SAV</div>
+        <div class="srv-body">24h de stress-test simultané CPU + GPU avant livraison. Rapport de performance inclus avec la machine. SAV 3 ans : un humain répond, intervention sous 48h. Pas de bot, pas de formulaire qui part dans le vide.</div>
+        <div class="srv-chips"><span class="chip">Burn-in 24h</span><span class="chip">Rapport inclus</span><span class="chip">3 ans garantie</span></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 Nexus Horizon Gaming. Tous droits réservés.</p>
-        </div>
-    </footer>
+<!-- PROCESS -->
+<section id="process" class="section">
+  <div class="s-inner">
+    <div class="s-tag rv">Processus</div>
+    <h2 class="s-title rv d1">De zéro <span class="hl">à jouer</span></h2>
+    <p class="s-sub rv d2">Cinq étapes claires. On vous tient informé à chaque phase — aucune mauvaise surprise.</p>
+    <div style="margin-top:64px;">
+      <div class="proc-step rv">
+        <div class="proc-n">01</div>
+        <div><div class="proc-row"><div class="proc-title">Échange & Briefing</div><span class="proc-badge">Gratuit · 15 min</span></div><p class="proc-desc">Vous décrivez votre usage, vos jeux, votre budget, votre setup actuel. On écoute sans jargon. Pas d'engagement — juste une conversation pour comprendre exactement ce qu'il vous faut.</p></div>
+      </div>
+      <div class="proc-step rv d1">
+        <div class="proc-n">02</div>
+        <div><div class="proc-row"><div class="proc-title">Devis Détaillé</div><span class="proc-badge">Sous 24h</span></div><p class="proc-desc">Chaque composant listé avec son rôle, son prix, et pourquoi on l'a choisi. Pas de tarif global flou. Vous modifiez, validez ou refusez — on s'adapte avant de commander quoi que ce soit.</p></div>
+      </div>
+      <div class="proc-step rv d2">
+        <div class="proc-n">03</div>
+        <div><div class="proc-row"><div class="proc-title">Commande & Réception</div><span class="proc-badge">2 à 5 jours</span></div><p class="proc-desc">Commande chez des fournisseurs vérifiés. Chaque composant contrôlé visuellement et testé à la réception. Un composant défectueux à la livraison fournisseur ? On l'échange — vous n'attendez pas, vous n'en savez rien.</p></div>
+      </div>
+      <div class="proc-step rv d3">
+        <div class="proc-n">04</div>
+        <div><div class="proc-row"><div class="proc-title">Assemblage & Stress Test</div><span class="proc-badge">72h en atelier</span></div><p class="proc-desc">Assemblage en atelier : pâte thermique, cable management, flux d'air. Ensuite 24h de burn-in simultané (Prime95 + FurMark). Températures, stabilité, fréquences, scores — tout consigné dans votre rapport livré avec la machine.</p></div>
+      </div>
+      <div class="proc-step rv d4">
+        <div class="proc-n">05</div>
+        <div><div class="proc-row"><div class="proc-title">Livraison & Prise en Main</div><span class="proc-badge">À domicile</span></div><p class="proc-desc">Livraison sécurisée ou remise en main propre. OS installé, drivers à jour. On vous explique l'entretien : dépoussiérage, surveillance des températures. Vous posez vos écouteurs et vous jouez.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script src="assets/js/main.js"></script>
+<!-- CATALOGUE -->
+<section id="catalogue" class="section">
+  <div class="s-inner">
+    <div class="s-tag rv">Catalogue</div>
+    <h2 class="s-title rv d1">Nos <span class="hl">configurations</span></h2>
+    <p class="s-sub rv d2">Trois gammes, trois profils. Prix main-d'œuvre, tests et livraison inclus. Toutes personnalisables sur demande.</p>
+    <div class="tab-row rv d3">
+      <button class="tab on" onclick="showTab('gaming',this)">Gaming AAA</button>
+      <button class="tab" onclick="showTab('esport',this)">Compétitif</button>
+      <button class="tab" onclick="showTab('creation',this)">Création</button>
+    </div>
+
+    <div id="t-gaming" class="cfg-grid">
+      <div class="cfg-card rv">
+        <div class="cfg-top"><div class="cfg-tier">// Entrée de gamme</div><div class="cfg-name">NHC Initiation</div><div class="cfg-slug">Pour débuter sans se restreindre</div><div class="cfg-price-lbl">À partir de</div><div class="cfg-price">849 €</div><div class="cfg-price-note">MO + tests + livraison inclus</div></div>
+        <div class="cfg-specs"><div class="spec"><span class="sk">CPU</span><span class="sv">6C/12T · 4.8 GHz boost</span></div><div class="spec"><span class="sk">GPU</span><span class="sv">8 Go GDDR6</span></div><div class="spec"><span class="sk">RAM</span><span class="sv">16 Go DDR5 5200 MHz</span></div><div class="spec"><span class="sk">SSD</span><span class="sv">1 To NVMe Gen4</span></div><div class="spec"><span class="sk">Alim</span><span class="sv">650W 80+ Gold</span></div></div>
+        <div class="cfg-target"><span class="cfg-target-lbl">Cible</span><span class="cfg-target-val">1080p · 144 Hz · Ultra</span></div>
+        <div class="cfg-foot"><button class="btn-cfg" onclick="location.href='#contact'">Demander ce devis</button></div>
+      </div>
+      <div class="cfg-card featured rv d1">
+        <div class="cfg-top"><div class="cfg-tier">// Meilleur rapport Q/P</div><div class="cfg-name">NHC Ascension</div><div class="cfg-slug">Le sweet spot du gaming actuel</div><div class="cfg-price-lbl">À partir de</div><div class="cfg-price">1 399 €</div><div class="cfg-price-note">MO + tests + livraison inclus</div></div>
+        <div class="cfg-specs"><div class="spec"><span class="sk">CPU</span><span class="sv">8C/16T · 5.4 GHz boost</span></div><div class="spec"><span class="sk">GPU</span><span class="sv">12 Go GDDR6X</span></div><div class="spec"><span class="sk">RAM</span><span class="sv">32 Go DDR5 6000 MHz XMP</span></div><div class="spec"><span class="sk">SSD</span><span class="sv">2 To NVMe Gen4 · 7 Go/s</span></div><div class="spec"><span class="sk">Alim</span><span class="sv">850W 80+ Gold modulaire</span></div></div>
+        <div class="cfg-target"><span class="cfg-target-lbl">Cible</span><span class="cfg-target-val">1440p · 165 Hz · Ultra</span></div>
+        <div class="cfg-foot"><button class="btn-cfg" onclick="location.href='#contact'">Demander ce devis</button></div>
+      </div>
+      <div class="cfg-card rv d2">
+        <div class="cfg-top"><div class="cfg-tier">// Haut de gamme</div><div class="cfg-name">NHC Apex</div><div class="cfg-slug">Aucun compromis</div><div class="cfg-price-lbl">À partir de</div><div class="cfg-price">2 490 €</div><div class="cfg-price-note">OC validé + rapport inclus</div></div>
+        <div class="cfg-specs"><div class="spec"><span class="sk">CPU</span><span class="sv">16C/32T · 5.8 GHz OC</span></div><div class="spec"><span class="sk">GPU</span><span class="sv">24 Go GDDR6X</span></div><div class="spec"><span class="sk">RAM</span><span class="sv">64 Go DDR5 6400 MHz XMP</span></div><div class="spec"><span class="sk">SSD</span><span class="sv">2× 2 To NVMe Gen5 · 12 Go/s</span></div><div class="spec"><span class="sk">Alim</span><span class="sv">1000W 80+ Platinum</span></div></div>
+        <div class="cfg-target"><span class="cfg-target-lbl">Cible</span><span class="cfg-target-val">4K · 144 Hz — OLED 1440p</span></div>
+        <div class="cfg-foot"><button class="btn-cfg" onclick="location.href='#contact'">Demander ce devis</button></div>
+      </div>
+    </div>
+
+    <div id="t-esport" class="cfg-grid" style="display:none">
+      <div class="cfg-card rv">
+        <div class="cfg-top"><div class="cfg-tier">// FPS Compétitif</div><div class="cfg-name">NHC FPS</div><div class="cfg-slug">Framerate max, latence zéro</div><div class="cfg-price-lbl">À partir de</div><div class="cfg-price">1 099 €</div><div class="cfg-price-note">XMP + OC RAM inclus</div></div>
+        <div class="cfg-specs"><div class="spec"><span class="sk">CPU</span><span class="sv">8C haute fréquence, IPC optimisé</span></div><div class="spec"><span class="sk">GPU</span><span class="sv">8 Go GDDR6 · framerate focus</span></div><div class="spec"><span class="sk">RAM</span><span class="sv">32 Go DDR5 6000 MHz CL30</span></div><div class="spec"><span class="sk">SSD</span><span class="sv">1 To NVMe Gen4</span></div><div class="spec"><span class="sk">Alim</span><span class="sv">750W 80+ Gold</span></div></div>
+        <div class="cfg-target"><span class="cfg-target-lbl">Cible</span><span class="cfg-target-val">1080p · 240+ Hz</span></div>
+        <div class="cfg-foot"><button class="btn-cfg" onclick="location.href='#contact'">Demander ce devis</button></div>
+      </div>
+      <div class="cfg-card featured rv d1">
+        <div class="cfg-top"><div class="cfg-tier">// Circuit Pro</div><div class="cfg-name">NHC Circuit</div><div class="cfg-slug">Pour les joueurs qui ne ratent pas</div><div class="cfg-price-lbl">À partir de</div><div class="cfg-price">1 649 €</div><div class="cfg-price-note">OC validé sur banc de test</div></div>
+        <div class="cfg-specs"><div class="spec"><span class="sk">CPU</span><span class="sv">8P-cores OC · timings serrés</span></div><div class="spec"><span class="sk">GPU</span><span class="sv">16 Go GDDR7</span></div><div class="spec"><span class="sk">RAM</span><span class="sv">32 Go DDR5 7200 MHz CL28</span></div><div class="spec"><span class="sk">SSD</span><span class="sv">2 To NVMe Gen5</span></div><div class="spec"><span class="sk">Alim</span><span class="sv">850W 80+ Platinum</span></div></div>
+        <div class="cfg-target"><span class="cfg-target-lbl">Cible</span><span class="cfg-target-val">1080p · 360 Hz — 1440p · 240 Hz</span></div>
+        <div class="cfg-foot"><button class="btn-cfg" onclick="location.href='#contact'">Demander ce devis</button></div>
+      </div>
+    </div>
+
+    <div id="t-creation" class="cfg-grid" style="display:none">
+      <div class="cfg-card rv">
+        <div class="cfg-top"><div class="cfg-tier">// Studio</div><div class="cfg-name">NHC Studio</div><div class="cfg-slug">Montage, design, streaming</div><div class="cfg-price-lbl">À partir de</div><div class="cfg-price">1 199 €</div><div class="cfg-price-note">MO + tests + livraison inclus</div></div>
+        <div class="cfg-specs"><div class="spec"><span class="sk">CPU</span><span class="sv">10C/20T</span></div><div class="spec"><span class="sk">GPU</span><span class="sv">12 Go GDDR6 · CUDA/NVENC</span></div><div class="spec"><span class="sk">RAM</span><span class="sv">64 Go DDR5 5600 MHz</span></div><div class="spec"><span class="sk">SSD</span><span class="sv">2 To NVMe + HDD 4 To</span></div></div>
+        <div class="cfg-target"><span class="cfg-target-lbl">Cible</span><span class="cfg-target-val">Premiere · DaVinci · Photoshop</span></div>
+        <div class="cfg-foot"><button class="btn-cfg" onclick="location.href='#contact'">Demander ce devis</button></div>
+      </div>
+      <div class="cfg-card featured rv d1">
+        <div class="cfg-top"><div class="cfg-tier">// Render Beast</div><div class="cfg-name">NHC Render</div><div class="cfg-slug">3D, animation, rendu lourd</div><div class="cfg-price-lbl">À partir de</div><div class="cfg-price">2 199 €</div><div class="cfg-price-note">Config validée studio</div></div>
+        <div class="cfg-specs"><div class="spec"><span class="sk">CPU</span><span class="sv">16C/32T</span></div><div class="spec"><span class="sk">GPU</span><span class="sv">24 Go GDDR6X</span></div><div class="spec"><span class="sk">RAM</span><span class="sv">128 Go DDR5</span></div><div class="spec"><span class="sk">SSD</span><span class="sv">NVMe 4 To Gen5</span></div></div>
+        <div class="cfg-target"><span class="cfg-target-lbl">Cible</span><span class="cfg-target-val">Blender · Cinema 4D · Unreal</span></div>
+        <div class="cfg-foot"><button class="btn-cfg" onclick="location.href='#contact'">Demander ce devis</button></div>
+      </div>
+    </div>
+
+    <div style="margin-top:48px;text-align:center;" class="rv">
+      <p style="font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:20px;">Besoin d'un build spécifique ? On configure tout à la demande.</p>
+      <a href="#contact" class="btn btn-solid">Config 100% sur mesure</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why" class="section">
+  <div class="s-inner">
+    <div class="s-tag rv">Pourquoi NHC</div>
+    <h2 class="s-title rv d1">L'expertise, <span class="hl">pas les promesses</span></h2>
+    <p class="s-sub rv d2">N'importe qui peut visser des composants ensemble. Ce qui nous distingue, c'est ce qu'on fait avant, pendant et après.</p>
+    <div class="why-layout rv d3">
+      <div>
+        <div class="why-pt"><div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg></div><div><div class="why-pt-title">Expertise hardware réelle</div><p class="why-pt-desc">Compatibilité mémoire, latences RAM, goulots CPU/GPU, dimensionnement alimentation — on maîtrise les détails qui séparent une machine correcte d'une machine réellement optimale pour votre usage.</p></div></div>
+        <div class="why-pt"><div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><div><div class="why-pt-title">Transparence totale sur les prix</div><p class="why-pt-desc">Chaque composant listé avec son prix d'achat, la marge de main-d'œuvre clairement séparée. Vous savez exactement ce que vous payez et pourquoi — sans formule globale opaque.</p></div></div>
+        <div class="why-pt"><div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg></div><div><div class="why-pt-title">Un interlocuteur unique</div><p class="why-pt-desc">Du premier message à la livraison, vous parlez à la même personne. Pas de ticket, pas de bot. Si quelque chose cloche sous garantie, on répond dans les 48h.</p></div></div>
+        <div class="why-pt"><div class="why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg></div><div><div class="why-pt-title">Rapport de validation fourni</div><p class="why-pt-desc">Températures, scores Cinebench, fréquences effectives, résultats burn-in — tout dans un rapport livré avec votre machine. Vous avez la preuve que ça fonctionne.</p></div></div>
+      </div>
+      <div class="terminal rv d2">
+        <div class="t-bar"><div class="t-dot td-r"></div><div class="t-dot td-y"></div><div class="t-dot td-g"></div><div class="t-title">nhc-validation-report.log</div></div>
+        <div class="t-body">
+          <div class="tl"><span class="tp">nhc@atelier:~$</span><span class="tc">&nbsp;run_burnin --duration=24h --all</span></div>
+          <div class="tb"></div>
+          <div class="tl"><span class="to">Lancement Prime95 — CPU charge 100%</span></div>
+          <div class="tl"><span class="to">Lancement FurMark — GPU charge 100%</span></div>
+          <div class="tl"><span class="to">Monitoring actif — intervalle 1s</span></div>
+          <div class="tb"></div>
+          <div class="tl"><span class="tp">nhc@atelier:~$</span><span class="tc">&nbsp;check_thermals</span></div>
+          <div class="tb"></div>
+          <div class="tl"><span class="to">CPU max : 79°C ✓  [seuil 95°C]</span></div>
+          <div class="tl"><span class="to">GPU max : 81°C ✓  [seuil 93°C]</span></div>
+          <div class="tl"><span class="to">Stabilité : PASS — 0 crash / 24h</span></div>
+          <div class="tb"></div>
+          <div class="tl"><span class="tp">nhc@atelier:~$</span><span class="tc">&nbsp;benchmark --suite=full</span></div>
+          <div class="tb"></div>
+          <div class="tl"><span class="to">Cinebench nC  : 24 870 pts</span></div>
+          <div class="tl"><span class="to">Cinebench 1C  : 2 104 pts</span></div>
+          <div class="tl"><span class="to">3DMark TS     : 18 432 pts</span></div>
+          <div class="tl"><span class="to">RAM effective : 6 000 MHz CL30</span></div>
+          <div class="tb"></div>
+          <div class="tl"><span class="tx">→ Rapport PDF généré et inclus</span></div>
+          <div class="tl"><span class="tx">→ Machine validée pour livraison ✓</span></div>
+          <div class="tb"></div>
+          <div class="tl"><span class="tp">nhc@atelier:~$</span><span class="cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="s-inner">
+    <div class="s-tag rv">Contact</div>
+    <h2 class="s-title rv d1">Lancez votre <span class="hl">projet</span></h2>
+    <p class="s-sub rv d2">Devis gratuit, réponse sous 24h ouvrées. Remplissez le formulaire et on revient vers vous rapidement.</p>
+    <div class="contact-layout rv d3">
+      <div>
+        <div style="font-family:var(--display);font-size:1.2rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:18px;color:var(--mid);">Infos de contact</div>
+        <div class="c-info">
+          <div class="c-block"><div class="c-lbl">Email</div><div class="c-val">contact@nhc-gaming.fr</div></div>
+          <div class="c-block"><div class="c-lbl">Téléphone</div><div class="c-val">+33 2 xx xx xx xx</div></div>
+          <div class="c-block"><div class="c-lbl">Atelier</div><div class="c-val">Normandie, France</div></div>
+          <div class="c-block"><div class="c-lbl">Délai de réponse</div><div class="c-val">Sous 24h ouvrées</div></div>
+          <div class="c-block"><div class="c-lbl">Devis</div><div class="c-val">Gratuit & sans engagement</div></div>
+        </div>
+      </div>
+      <div class="form">
+        <div class="fg"><label>Prénom & Nom</label><input type="text" placeholder="Jean Dupont"></div>
+        <div class="fg"><label>Email</label><input type="email" placeholder="jean@email.fr"></div>
+        <div class="fg"><label>Budget indicatif</label><select><option value="">Sélectionner...</option><option>Moins de 800 €</option><option>800 € – 1 200 €</option><option>1 200 € – 2 000 €</option><option>2 000 € – 3 000 €</option><option>Plus de 3 000 €</option></select></div>
+        <div class="fg"><label>Usage principal</label><select><option value="">Sélectionner...</option><option>Gaming compétitif FPS</option><option>Gaming AAA / Open World</option><option>Streaming / Création de contenu</option><option>3D / Rendu / Animation</option><option>Polyvalent gaming + bureau</option></select></div>
+        <div class="fg full"><label>Détails (jeux, résolution, contraintes…)</label><textarea placeholder="Ex : je joue principalement à des FPS compétitifs sur un écran 1440p 165 Hz, je veux quelque chose de silencieux…"></textarea></div>
+        <div class="f-note">Données utilisées uniquement pour traiter votre demande de devis. Voir nos <button onclick="openModal('privacy')" style="background:none;border:none;color:var(--blue);cursor:pointer;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-decoration:underline;">mentions légales</button>.</div>
+        <button class="f-submit" id="submitBtn">Envoyer ma demande →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">NHC<span class="dot">.</span></div>
+  <div class="foot-copy">© 2025 Nexus Horizon Cybernétique — Tous droits réservés</div>
+  <div class="foot-links">
+    <button onclick="openModal('legal')">Mentions légales</button>
+    <button onclick="openModal('cgv')">CGV</button>
+    <button onclick="openModal('privacy')">Confidentialité & RGPD</button>
+  </div>
+</footer>
+
+<!-- MODAL MENTIONS LÉGALES -->
+<div class="modal-overlay" id="modal-legal">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title">Mentions légales</div><button class="modal-close" onclick="closeModal('legal')">✕</button></div>
+    <div class="modal-body">
+      <h3>Éditeur du site</h3>
+      <p><strong>Nexus Horizon Cybernétique (NHC)</strong><br>Entreprise individuelle — SIRET : 000 000 000 00000 (fictif)<br>Siège social : Normandie, France<br>Email : contact@nhc-gaming.fr<br>Téléphone : +33 2 xx xx xx xx</p>
+      <h3>Directeur de la publication</h3>
+      <p>Le directeur de la publication est le représentant légal de Nexus Horizon Cybernétique.</p>
+      <h3>Hébergement</h3>
+      <p><strong>OVH SAS</strong><br>2 rue Kellermann — 59100 Roubaix — France<br>Tél. : 1007 (depuis la France)</p>
+      <h3>Propriété intellectuelle</h3>
+      <p>L'ensemble du contenu de ce site (textes, visuels, structure, logo) est la propriété exclusive de Nexus Horizon Cybernétique. Toute reproduction, partielle ou totale, est interdite sans accord préalable et écrit de l'éditeur.</p>
+      <h3>Responsabilité</h3>
+      <p>Les informations fournies sur ce site sont données à titre indicatif. NHC s'efforce de les maintenir à jour et exactes, mais ne saurait être tenu responsable d'éventuelles erreurs, omissions ou indisponibilités du site.</p>
+      <h3>Droit applicable</h3>
+      <p>Le présent site est soumis au droit français. Tout litige relatif à son utilisation relève de la compétence exclusive des tribunaux français compétents.</p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CGV -->
+<div class="modal-overlay" id="modal-cgv">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title">Conditions Générales de Vente</div><button class="modal-close" onclick="closeModal('cgv')">✕</button></div>
+    <div class="modal-body">
+      <h3>Article 1 — Objet</h3>
+      <p>Les présentes CGV régissent les relations contractuelles entre Nexus Horizon Cybernétique (NHC) et tout client particulier ou professionnel passant commande de services d'assemblage ou de vente de matériel informatique.</p>
+      <h3>Article 2 — Commandes & Devis</h3>
+      <p>Toute commande est précédée d'un devis détaillé établi gratuitement. Le devis est valable 30 jours à compter de sa date d'émission. Aucune commande n'est engagée avant validation écrite du devis par le client et versement d'un acompte de 30 %.</p>
+      <h3>Article 3 — Prix</h3>
+      <p>Les prix affichés sont indicatifs et peuvent varier selon la disponibilité des composants au moment de la commande. Le devis personnalisé fait foi. Tous les prix s'entendent TTC, main-d'œuvre, tests et livraison inclus, sauf mention contraire explicite.</p>
+      <h3>Article 4 — Délais</h3>
+      <p>Le délai indicatif d'assemblage est de 72 heures ouvrées à compter de la réception complète et conforme des composants. NHC s'engage à informer le client de tout retard constaté dans les meilleurs délais.</p>
+      <h3>Article 5 — Garantie</h3>
+      <p>NHC garantit la main-d'œuvre pendant 3 ans à compter de la date de livraison. Les composants bénéficient de leur garantie constructeur respective (minimum 2 ans pour les particuliers, conformément à la réglementation européenne en vigueur). En cas de panne, NHC prend en charge les démarches de retour fournisseur.</p>
+      <h3>Article 6 — Retour & Remboursement</h3>
+      <p>Conformément à l'article L.221-28 du Code de la consommation, le droit de rétractation ne s'applique pas aux biens confectionnés selon les spécifications du consommateur. Tout défaut constaté à la livraison doit être signalé par écrit dans un délai de 48 heures.</p>
+      <h3>Article 7 — Responsabilité</h3>
+      <p>NHC ne saurait être tenu responsable de l'incompatibilité d'un composant non fourni par ses soins, ni des dommages résultant d'une utilisation non conforme du matériel. La responsabilité de NHC est limitée au montant de la commande concernée.</p>
+      <h3>Article 8 — Droit applicable & Litiges</h3>
+      <p>Les présentes CGV sont soumises au droit français. En cas de litige, une solution amiable sera recherchée en priorité. À défaut d'accord, les tribunaux de Normandie seront seuls compétents.</p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CONFIDENTIALITÉ -->
+<div class="modal-overlay" id="modal-privacy">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title">Confidentialité & RGPD</div><button class="modal-close" onclick="closeModal('privacy')">✕</button></div>
+    <div class="modal-body">
+      <h3>Responsable du traitement</h3>
+      <p>Nexus Horizon Cybernétique (NHC) — contact@nhc-gaming.fr — est responsable du traitement des données personnelles collectées via ce site.</p>
+      <h3>Données collectées</h3>
+      <p>Dans le cadre de vos demandes de devis, NHC collecte :</p>
+      <ul><li>Nom et prénom</li><li>Adresse email</li><li>Numéro de téléphone (optionnel)</li><li>Informations relatives à votre projet (budget, usage, préférences techniques)</li></ul>
+      <h3>Finalité et base légale</h3>
+      <p>Ces données sont collectées sur la base de votre consentement explicite (soumission du formulaire) et dans le cadre de l'exécution d'un contrat (traitement des commandes). Elles sont utilisées exclusivement pour établir votre devis personnalisé, assurer le suivi de commande et le SAV.</p>
+      <h3>Conservation des données</h3>
+      <p>Vos données sont conservées pendant la durée nécessaire à l'exécution du service, puis archivées 3 ans conformément aux obligations légales comptables françaises. Elles sont ensuite supprimées définitivement.</p>
+      <h3>Partage des données</h3>
+      <p>NHC ne vend ni ne loue vos données personnelles à des tiers. Aucun partage à des fins commerciales. Les données peuvent être transmises aux fournisseurs de composants uniquement dans le cadre strict de l'exécution de votre commande.</p>
+      <h3>Vos droits (RGPD — UE 2016/679)</h3>
+      <p>Conformément au RGPD, vous disposez des droits suivants :</p>
+      <ul><li>Droit d'accès à vos données personnelles</li><li>Droit de rectification des données inexactes</li><li>Droit à l'effacement (droit à l'oubli)</li><li>Droit à la portabilité des données</li><li>Droit d'opposition et de limitation du traitement</li></ul>
+      <p>Pour exercer ces droits : <strong>contact@nhc-gaming.fr</strong>. Vous pouvez également introduire une réclamation auprès de la CNIL (www.cnil.fr).</p>
+      <h3>Cookies</h3>
+      <p>Ce site n'utilise aucun cookie tiers à des fins publicitaires ou de suivi comportemental. Aucune donnée n'est transmise à des régies publicitaires. Les seuls éléments de stockage utilisés sont strictement fonctionnels et nécessaires au bon fonctionnement du site.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// Scroll reveal
+const io = new IntersectionObserver(e => {
+  e.forEach(el => { if (el.isIntersecting) { el.target.classList.add('in'); io.unobserve(el.target); } });
+}, { threshold: .08, rootMargin: '0px 0px -28px 0px' });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+// Nav bg
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').style.background =
+    scrollY > 60 ? 'rgba(11,11,15,.98)' : 'rgba(11,11,15,.88)';
+});
+
+// Catalogue tabs
+function showTab(name, btn) {
+  ['gaming','esport','creation'].forEach(t => {
+    const el = document.getElementById('t-'+t);
+    if (el) el.style.display = 'none';
+  });
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('on'));
+  const target = document.getElementById('t-'+name);
+  if (target) target.style.display = 'grid';
+  btn.classList.add('on');
+  if (target) {
+    target.querySelectorAll('.rv').forEach(el => {
+      el.classList.remove('in');
+      setTimeout(() => el.classList.add('in'), 60);
+    });
+  }
+}
+
+// Modals
+function openModal(id) { document.getElementById('modal-'+id).classList.add('open'); document.body.style.overflow='hidden'; }
+function closeModal(id) { document.getElementById('modal-'+id).classList.remove('open'); document.body.style.overflow=''; }
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) { m.classList.remove('open'); document.body.style.overflow=''; } });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { document.querySelectorAll('.modal-overlay.open').forEach(m => { m.classList.remove('open'); document.body.style.overflow=''; }); }
+});
+
+// Submit
+document.getElementById('submitBtn').addEventListener('click', function () {
+  this.textContent = '✓ Demande envoyée !';
+  this.style.background = '#28c840'; this.style.color = '#0b0b0f';
+  setTimeout(() => { this.textContent = 'Envoyer ma demande →'; this.style.background = ''; this.style.color = ''; }, 3000);
+});
+</script>
 </body>
 </html>
